@@ -71,7 +71,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             className="flex items-center text-left group shrink-0 cursor-pointer"
           >
             <img 
-              src="/public/img/Logo.png" 
+              src="/img/Logo.png" 
               alt="TopBux Logo" 
               className="h-12 w-auto object-contain"
               referrerPolicy="no-referrer"
