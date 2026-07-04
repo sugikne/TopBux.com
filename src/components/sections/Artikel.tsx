@@ -28,7 +28,7 @@ const ARTICLES: Article[] = [
     category: "Keamanan",
     date: "04 Jul 2026",
     author: "Admin Tofav",
-    image: "/public/img/hero_anime_nami_1783176024312.jpg",
+    image: "/img/hero_anime_nami_1783176024312.jpg",
     readTime: "5 Menit Baca",
     sections: [
       {
@@ -73,7 +73,7 @@ const ARTICLES: Article[] = [
     category: "Panduan",
     date: "02 Jul 2026",
     author: "Admin Tofav",
-    image: "/public/img/hero_anime_nami_1783176024312.jpg",
+    image: "/img/hero_anime_nami_1783176024312.jpg",
     readTime: "4 Menit Baca",
     sections: [
       {
@@ -126,7 +126,7 @@ const ARTICLES: Article[] = [
     category: "Tutorial",
     date: "28 Jun 2026",
     author: "Admin Tofav",
-    image: "/public/img/hero_anime_nami_1783176024312.jpg",
+    image: "/img/hero_anime_nami_1783176024312.jpg",
     readTime: "6 Menit Baca",
     sections: [
       {
