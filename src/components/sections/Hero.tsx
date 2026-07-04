@@ -97,7 +97,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               className="relative w-full max-w-[340px]  mx-auto lg:ml-auto group"
             >
               <motion.img 
-                src="/public/img/1.png" 
+                src="/img/1.png" 
                 alt="TopBux Anime Nami Gamer" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
