@@ -6,7 +6,7 @@ export const PRODUCTS: Product[] = [
     name: "Robux Instan (Via Login)",
     category: "Robux",
     description: "Proses cepat via Login akun Roblox Anda. Robux langsung masuk dan siap digunakan tanpa masa tunggu pending.",
-    image: "/public/img/robux_instan_cover_1783175145850.jpg",
+    image: "/img/robux_instan_cover_1783175145850.jpg",
     tag: "Terlaris",
     startingPrice: "Rp 17.500"
   },
@@ -15,7 +15,7 @@ export const PRODUCTS: Product[] = [
     name: "Robux Gamepass (Tanpa Login)",
     category: "Robux",
     description: "Proses aman tanpa password menggunakan tautan Gamepass. Robux utuh bersih dengan masa pending 5-7 hari resmi Roblox.",
-    image: "/public/img/robux_gamepass_cover_1783175160771.jpg",
+    image: "/img/robux_gamepass_cover_1783175160771.jpg",
     tag: "Terpopuler",
     startingPrice: "Rp 7.100"
   }
