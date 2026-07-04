@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import Navbar from "./components/layout/Navbar";
+import { ArrowUp, Phone } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useState } from "react";
 import Footer from "./components/layout/Footer";
-import Hero from "./components/sections/Hero";
+import Navbar from "./components/layout/Navbar";
+import AdminPanel from "./components/sections/AdminPanel";
+import Artikel from "./components/sections/Artikel";
+import CekPesanan from "./components/sections/CekPesanan";
+import FAQ from "./components/sections/FAQ";
 import Features from "./components/sections/Features";
-import ProductsCatalog from "./components/sections/ProductsCatalog";
-import RobuxNominals from "./components/sections/RobuxNominals";
+import Hero from "./components/sections/Hero";
 import HowToBuy from "./components/sections/HowToBuy";
 import OrderForm from "./components/sections/OrderForm";
-import FAQ from "./components/sections/FAQ";
+import ProductsCatalog from "./components/sections/ProductsCatalog";
+import RobuxNominals from "./components/sections/RobuxNominals";
 import Testimonials from "./components/sections/Testimonials";
-import CekPesanan from "./components/sections/CekPesanan";
-import Artikel from "./components/sections/Artikel";
-import AdminPanel from "./components/sections/AdminPanel";
-import { Phone, ArrowUp, ShieldCheck, Sparkles, MessageCircle } from "lucide-react";
 import { RobuxOption } from "./types";
 
 export default function App() {

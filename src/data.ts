@@ -1,4 +1,4 @@
-import { RobuxOption, FAQItem, Testimonial, Product } from "./types";
+import { FAQItem, Product, RobuxOption, Testimonial } from "./types";
 
 export const PRODUCTS: Product[] = [
   {

@@ -1,4 +1,4 @@
-import { Shield, Phone, Clock, Mail, ExternalLink } from "lucide-react";
+import { Clock, ExternalLink, Mail, Phone } from "lucide-react";
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;

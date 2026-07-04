@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, Shield, ChevronDown, MessageCircle, Instagram, Flame, ExternalLink } from "lucide-react";
+import { ChevronDown, ExternalLink, Flame, Instagram, Menu, MessageCircle, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
 interface NavbarProps {
   activeSection: string;

@@ -1,5 +1,5 @@
+import { Shield, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
-import { Shield, Sparkles, Send, Zap, Users, Play } from "lucide-react";
 
 interface HeroProps {
   onNavigate: (sectionId: string) => void;

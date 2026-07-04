@@ -1,6 +1,6 @@
+import { AlertTriangle, ArrowRight, BookOpen, Calendar, CheckCircle, User, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { BookOpen, Calendar, User, ArrowRight, ShieldCheck, X, FileText, AlertTriangle, CheckCircle } from "lucide-react";
 
 export interface ArticleSection {
   type: "paragraph" | "heading" | "list" | "warning";
