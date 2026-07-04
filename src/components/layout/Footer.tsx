@@ -23,7 +23,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             >
               <div className="bg-slate-50 p-1.5 rounded-xl border border-slate-200">
                 <img 
-                  src="/public/img/Logo.png" 
+                  src="/img/Logo.png" 
                   alt="TopBux Logo" 
                   className="h-8 w-auto object-contain"
                   referrerPolicy="no-referrer"
