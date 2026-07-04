@@ -552,7 +552,7 @@ export default function App() {
             {/* Circular Anime Avatar */}
             <div className="w-full h-full rounded-full overflow-hidden">
               <img 
-                src="/public/img/1.png" 
+                src="/img/1.png" 
                 alt="Admin Avatar" 
                 className="w-full h-full object-cover object-top scale-110"
                 referrerPolicy="no-referrer"
