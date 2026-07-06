@@ -543,7 +543,7 @@ export default function App() {
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="https://wa.me/6285333049716"
+            href="https://wa.me/628213142504"
             target="_blank"
             rel="noreferrer"
             className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#2563EB] shadow-2xl flex items-center justify-center relative group overflow-visible bg-white cursor-pointer shrink-0"
