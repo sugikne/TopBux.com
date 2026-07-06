@@ -35,7 +35,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             </p>
             <div className="flex space-x-3 pt-1">
               <a
-                href="https://wa.me/6285333049716"
+                href="https://wa.me/628213142504"
                 target="_blank"
                 rel="noreferrer"
                 className="p-2.5 rounded-full bg-slate-100 text-[#2563EB] hover:text-white hover:bg-[#2563EB] transition-all shadow-sm"
@@ -89,19 +89,19 @@ export default function Footer({ onNavigate }: FooterProps) {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href="https://wa.me/6285333049716"
+                  href="https://wa.me/628213142504"
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center space-x-2.5 text-slate-600 hover:text-[#2563EB] group transition-colors font-medium"
                 >
                   <Phone className="w-4 h-4 text-[#2563EB] group-hover:scale-110 transition-transform shrink-0" />
-                  <span>+62 853-3304-9716 (WhatsApp)</span>
+                  <span>+62 8213142504 (WhatsApp)</span>
                   <ExternalLink className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />
                 </a>
               </li>
               <li className="flex items-center space-x-2.5 text-slate-700 font-medium">
                 <Mail className="w-4 h-4 text-[#2563EB] shrink-0" />
-                <span>support@topbux.id</span>
+                <span>topbuxid@gmail.com</span>
               </li>
               <li className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 font-medium leading-relaxed font-sans">
                 <span className="font-extrabold text-amber-600">Penting:</span> Pembelian resmi hanya diproses melalui admin WhatsApp di atas. Hati-hati terhadap penipuan mengatasnamakan TopBux.
