@@ -42,9 +42,9 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
   ];
 
   const contactOptions = [
-    { name: "WhatsApp Official", handle: "@AdminTopBux", url: "https://wa.me/6285333049716", icon: MessageCircle, color: "text-emerald-500 hover:bg-emerald-50" },
-    { name: "Instagram Shop", handle: "@topbux.id", url: "https://instagram.com/", icon: Instagram, color: "text-pink-500 hover:bg-pink-50" },
-    { name: "TikTok Store", handle: "@topbux_official", url: "https://tiktok.com/", icon: Flame, color: "text-slate-900 hover:bg-slate-50" },
+    { name: "WhatsApp Official", handle: "@AdminTopBux", url: "https://wa.me/628213142504", icon: MessageCircle, color: "text-emerald-500 hover:bg-emerald-50" },
+    { name: "Instagram Shop", handle: "@topbux.id", url: "https://www.instagram.com/topbux.id/?utm_source=ig_web_button_share_sheet", icon: Instagram, color: "text-pink-500 hover:bg-pink-50" },
+    { name: "TikTok Store", handle: "@topbux_official", url: "https://www.tiktok.com/@topbux.id?is_from_webapp=1&sender_device=pc", icon: Flame, color: "text-slate-900 hover:bg-slate-50" },
   ];
 
   const handleLinkClick = (id: string) => {
