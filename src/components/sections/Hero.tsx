@@ -88,28 +88,88 @@ export default function Hero({ onNavigate }: HeroProps) {
             </motion.div>
           </div>
 
-          {/* Right Visual Image - Hidden on Mobile, Shown on Desktop */}
-          <div className="hidden lg:block lg:col-span-5 relative">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="relative w-full max-w-[340px]  mx-auto lg:ml-auto group"
-            >
-              <motion.img 
-                src="/img/1.png" 
-                alt="TopBux Anime Nami Gamer" 
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-                animate={{ 
-                  y: [0, -8, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
+         {/* Right Visual Image - Hidden on Mobile, Shown on Desktop */}
+<div className="hidden lg:block lg:col-span-5 relative">
+  <motion.div
+    initial={{ opacity: 0, scale: 0.9, y: 15 }}
+    animate={{ opacity: 1, scale: 1, y: 0 }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+    className="relative w-full max-w-[340px] mx-auto lg:ml-auto group"
+  >
+    <motion.img 
+      src="/img/1.png" 
+      alt="TopBux Anime Nami Gamer" 
+      className="w-full h-full object-cover"
+      referrerPolicy="no-referrer"
+      animate={{ 
+        y: [0, -8, 0],
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    />
+
+    {/* Floating Robux-style Gem Icons */}
+    {[
+      { top: "5%", left: "-8%", size: 44, delay: 0, duration: 3.5 },
+      { top: "25%", right: "-10%", size: 32, delay: 0.6, duration: 4 },
+      { top: "60%", left: "-12%", size: 36, delay: 1.2, duration: 3.2 },
+      { top: "80%", right: "-6%", size: 28, delay: 0.3, duration: 3.8 },
+    ].map((icon, i) => (
+      <motion.div
+        key={i}
+        className="absolute z-10"
+        style={{
+          top: icon.top,
+          left: icon.left,
+          right: icon.right,
+        }}
+        animate={{
+          y: [0, -14, 0],
+          rotate: [0, 8, -8, 0],
+        }}
+        transition={{
+          duration: icon.duration,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: icon.delay,
+        }}
+      >
+        <motion.svg
+          width={icon.size}
+          height={icon.size}
+          viewBox="0 0 24 24"
+          fill="none"
+          animate={{ opacity: [0.85, 1, 0.85] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          style={{ filter: "drop-shadow(0 0 8px rgba(0,255,100,0.5))" }}
+        >
+          {/* Gem / currency-style icon */}
+          <path
+            d="M12 2L4 9L12 22L20 9L12 2Z"
+            fill="url(#gemGradient)"
+            stroke="#0a5c2e"
+            strokeWidth="0.5"
+          />
+          <path
+            d="M4 9H20M8 9L12 2L16 9M8 9L12 22M16 9L12 22"
+            stroke="#0a5c2e"
+            strokeWidth="0.6"
+            strokeLinejoin="round"
+          />
+          <defs>
+            <linearGradient id="gemGradient" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#4ade80" />
+              <stop offset="50%" stopColor="#22c55e" />
+              <stop offset="100%" stopColor="#15803d" />
+            </linearGradient>
+          </defs>
+        </motion.svg>
+      </motion.div>
+    ))}
+  
               
               {/* Small floating badge */}
               <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/50 shadow-lg flex items-center justify-between">

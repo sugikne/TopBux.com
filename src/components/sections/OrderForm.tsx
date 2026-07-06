@@ -2,12 +2,24 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ROBUX_INSTAN_OPTIONS, ROBUX_GAMEPASS_OPTIONS } from "../../data";
 import { OrderFormData } from "../../types";
-import { Send, Sparkles, HelpCircle, Check, ShieldAlert, AlertCircle, Info, Lock, Eye, EyeOff } from "lucide-react";
+import { Send, Sparkles, HelpCircle, Check, ShieldAlert, AlertCircle, Info, Lock, Eye, EyeOff, Copy, CheckCircle2, Search, X, PackageSearch, Clock, PackageCheck } from "lucide-react";
 
 interface OrderFormProps {
   selectedProductId: string;
   selectedNominal: number | null;
   onSelectNominal: (amount: number) => void;
+}
+
+interface SavedOrderRecord {
+  id: string;
+  name: string;
+  username: string;
+  whatsappNumber: string;
+  nominalRobux: number;
+  productType: string;
+  priceIdr: number;
+  status: "Diproses" | "Pending" | "Selesai";
+  date: string;
 }
 
 export default function OrderForm({
@@ -40,6 +52,16 @@ export default function OrderForm({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showGamepassHelper, setShowGamepassHelper] = useState(false);
 
+  // Order Success State
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [lastOrderId, setLastOrderId] = useState("");
+  const [isIdCopied, setIsIdCopied] = useState(false);
+
+  // Check Order Status State
+  const [showCheckOrderModal, setShowCheckOrderModal] = useState(false);
+  const [checkOrderId, setCheckOrderId] = useState("");
+  const [checkResult, setCheckResult] = useState<SavedOrderRecord | null | "not-found">(null);
+
   // Keep form nominal state in sync when selected from parent grid
   useEffect(() => {
     if (selectedNominal) {
@@ -69,7 +91,7 @@ export default function OrderForm({
   };
 
   // Generate the formatted WhatsApp Message text
-  const generateMessageText = () => {
+  const generateMessageText = (orderIdForMessage?: string) => {
     const nama = sanitizeText(formData.name || "-");
     const username = sanitizeText(formData.username || "-");
     const gamepass = sanitizeText(formData.gamepassUrl || "-");
@@ -77,6 +99,7 @@ export default function OrderForm({
     const nominal = formData.nominalRobux ? `${formData.nominalRobux} Robux` : "-";
     const nomor = sanitizeText(formData.whatsappNumber || "-");
     const catatan = sanitizeText(formData.note || "Tidak ada catatan.");
+    const orderIdLine = orderIdForMessage ? `\n\nNomor Pesanan:\n${orderIdForMessage}` : "";
 
     if (isInstant) {
       return `Halo Admin TopBux,
@@ -99,7 +122,7 @@ Nomor WhatsApp:
 ${nomor}
 
 Catatan:
-${catatan}
+${catatan}${orderIdLine}
 
 Mohon segera diproses ya min.
 Terima kasih!`;
@@ -125,7 +148,7 @@ Nomor WhatsApp:
 ${nomor}
 
 Catatan:
-${catatan}
+${catatan}${orderIdLine}
 
 Mohon segera diproses ya min.
 Terima kasih!`;
@@ -187,19 +210,20 @@ Terima kasih!`;
 
     // Success validation
     setIsSubmitted(true);
-    
+
+    const orderId = `TBX-${Math.floor(10000 + Math.random() * 90000)}`;
+
     // Save order to localStorage for tracking & admin integrations
     try {
       const selectedOption = currentOptions.find(opt => opt.amount === formData.nominalRobux);
       const calculatedPrice = selectedOption ? selectedOption.priceIdr : (formData.nominalRobux * (isInstant ? 175 : 135));
-      const orderId = `TBX-${Math.floor(10000 + Math.random() * 90000)}`;
       const today = new Date().toLocaleDateString("id-ID", {
         day: "2-digit",
         month: "short",
         year: "numeric"
       });
-      
-      const newSavedOrder = {
+
+      const newSavedOrder: SavedOrderRecord = {
         id: orderId,
         name: formData.name,
         username: formData.username,
@@ -218,17 +242,61 @@ Terima kasih!`;
     } catch (e) {
       console.error("Error saving order:", e);
     }
-    
-    // Construct WhatsApp message and redirect after a short delay for animation
+
+    // Construct WhatsApp message (with order number included) and redirect after a short delay
     setTimeout(() => {
-      const textMessage = generateMessageText();
+      const textMessage = generateMessageText(orderId);
       const encodedText = encodeURIComponent(textMessage);
       const waUrl = `https://wa.me/628213142504?text=${encodedText}`;
       
       // Open in a new window/tab safely
       window.open(waUrl, "_blank", "noopener,noreferrer");
+
       setIsSubmitted(false);
+      setLastOrderId(orderId);
+      setShowSuccessModal(true);
     }, 800);
+  };
+
+  const handleCopyOrderId = () => {
+    navigator.clipboard.writeText(lastOrderId).then(() => {
+      setIsIdCopied(true);
+      setTimeout(() => setIsIdCopied(false), 2000);
+    }).catch(() => {
+      // Clipboard API unavailable, silently ignore
+    });
+  };
+
+  const handleCheckOrder = (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const existing = localStorage.getItem("topbux_orders");
+      const list: SavedOrderRecord[] = existing ? JSON.parse(existing) : [];
+      const found = list.find(
+        (o) => o.id.trim().toLowerCase() === checkOrderId.trim().toLowerCase()
+      );
+      setCheckResult(found || "not-found");
+    } catch (e) {
+      setCheckResult("not-found");
+    }
+  };
+
+  const openCheckOrderModal = (prefillId?: string) => {
+    setCheckOrderId(prefillId || "");
+    setCheckResult(null);
+    setShowCheckOrderModal(true);
+  };
+
+  const statusBadgeClass = (status: SavedOrderRecord["status"]) => {
+    if (status === "Selesai") return "bg-emerald-500/10 text-emerald-600 border-emerald-500/20";
+    if (status === "Diproses") return "bg-blue-500/10 text-blue-600 border-blue-500/20";
+    return "bg-amber-500/10 text-amber-600 border-amber-500/20";
+  };
+
+  const statusIcon = (status: SavedOrderRecord["status"]) => {
+    if (status === "Selesai") return <PackageCheck className="w-4 h-4" />;
+    if (status === "Diproses") return <PackageSearch className="w-4 h-4" />;
+    return <Clock className="w-4 h-4" />;
   };
 
   return (
@@ -247,6 +315,14 @@ Terima kasih!`;
           <p className="font-sans text-slate-500 text-sm sm:text-base leading-relaxed">
             Lengkapin formulir di bawah ini dengan bener ya, bro. Semua data lo dijamin aman dan langsung dikirim ke WhatsApp admin!
           </p>
+          <button
+            type="button"
+            onClick={() => openCheckOrderModal()}
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#2563EB] hover:text-blue-700 transition-colors cursor-pointer underline underline-offset-2"
+          >
+            <Search className="w-3.5 h-3.5" />
+            Sudah pernah order? Cek Status Pesanan
+          </button>
         </div>
 
         {/* Form and Preview Split */}
@@ -601,6 +677,142 @@ Terima kasih!`;
 
         </div>
       </div>
+
+      {/* Success Modal with Order ID */}
+      <AnimatePresence>
+        {showSuccessModal && (
+          <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 10 }}
+              className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl relative text-center"
+            >
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <CheckCircle2 className="w-8 h-8" />
+              </div>
+
+              <h3 className="font-heading font-extrabold text-xl text-slate-900 mb-2">
+                Pesanan Berhasil Dibuat!
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 mb-5 leading-relaxed">
+                Chat WhatsApp ke admin sudah dibuka di tab baru. Simpan nomor pesanan ini untuk cek status kapan saja.
+              </p>
+
+              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex items-center justify-between gap-3 mb-5">
+                <span className="font-mono font-extrabold text-lg sm:text-xl text-[#2563EB] tracking-wider">
+                  {lastOrderId}
+                </span>
+                <button
+                  onClick={handleCopyOrderId}
+                  className="shrink-0 bg-white border border-blue-200 hover:bg-blue-100 text-[#2563EB] p-2 rounded-xl transition-colors cursor-pointer"
+                  title="Salin Nomor Pesanan"
+                >
+                  {isIdCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                <button
+                  onClick={() => {
+                    setShowSuccessModal(false);
+                    openCheckOrderModal(lastOrderId);
+                  }}
+                  className="flex-1 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold py-3 rounded-xl text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                >
+                  <Search className="w-4 h-4" />
+                  Cek Status Sekarang
+                </button>
+                <button
+                  onClick={() => setShowSuccessModal(false)}
+                  className="flex-1 bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
+                >
+                  Selesai
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Check Order Status Modal */}
+      <AnimatePresence>
+        {showCheckOrderModal && (
+          <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 10 }}
+              className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl relative"
+            >
+              <button
+                onClick={() => setShowCheckOrderModal(false)}
+                className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <h3 className="font-heading font-extrabold text-lg text-slate-900 mb-1.5 flex items-center gap-2">
+                <PackageSearch className="text-[#2563EB] w-5 h-5" />
+                Cek Status Pesanan
+              </h3>
+              <p className="text-xs text-slate-500 mb-5">
+                Masukkan Nomor Pesanan kamu (contoh: TBX-12345) untuk melihat status terbaru.
+              </p>
+
+              <form onSubmit={handleCheckOrder} className="space-y-3">
+                <input
+                  type="text"
+                  value={checkOrderId}
+                  onChange={(e) => setCheckOrderId(e.target.value)}
+                  placeholder="TBX-12345"
+                  className="w-full bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl text-sm font-mono tracking-wider focus:outline-none focus:ring-1 focus:ring-[#2563EB]/40 focus:border-[#2563EB] transition-all"
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <Search className="w-4 h-4" />
+                  Cek Sekarang
+                </button>
+              </form>
+
+              {/* Search Result */}
+              {checkResult === "not-found" && (
+                <div className="mt-4 bg-red-50 border border-red-100 rounded-xl p-4 text-xs text-red-600 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  Nomor pesanan tidak ditemukan. Pastikan format sudah benar.
+                </div>
+              )}
+
+              {checkResult && checkResult !== "not-found" && (
+                <div className="mt-4 bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono font-bold text-sm text-slate-900">{checkResult.id}</span>
+                    <span className={`text-[11px] font-bold px-2.5 py-1 rounded-lg border flex items-center gap-1 ${statusBadgeClass(checkResult.status)}`}>
+                      {statusIcon(checkResult.status)}
+                      {checkResult.status}
+                    </span>
+                  </div>
+                  <div className="text-xs text-slate-500 space-y-1">
+                    <p><span className="font-semibold text-slate-700">Username:</span> {checkResult.username}</p>
+                    <p><span className="font-semibold text-slate-700">Produk:</span> {checkResult.productType} — {checkResult.nominalRobux} R$</p>
+                    <p><span className="font-semibold text-slate-700">Total:</span> Rp {checkResult.priceIdr.toLocaleString("id-ID")}</p>
+                    <p><span className="font-semibold text-slate-700">Tanggal:</span> {checkResult.date}</p>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
