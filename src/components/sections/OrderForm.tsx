@@ -248,7 +248,7 @@ Terima kasih!`;
       const textMessage = generateMessageText(orderId);
       const encodedText = encodeURIComponent(textMessage);
       const waUrl = `https://wa.me/628213142504?text=${encodedText}`;
-      
+
       // Open in a new window/tab safely
       window.open(waUrl, "_blank", "noopener,noreferrer");
 
