@@ -83,7 +83,7 @@ export default function FAQ() {
             <p className="text-xs text-slate-500 font-sans">Hubungi Admin kami via live chat WhatsApp untuk konsultasi gratis.</p>
           </div>
           <a
-            href="https://wa.me/6285333049716"
+            href="https://wa.me/628213142504"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 bg-[#2563EB] hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-full text-xs sm:text-sm shadow-sm transition-all cursor-pointer whitespace-nowrap"
