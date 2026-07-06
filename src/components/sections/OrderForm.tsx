@@ -170,7 +170,7 @@ Terima kasih!`;
     } else {
       const waRegex = /^[0-9+() \-]{8,16}$/;
       if (!waRegex.test(formData.whatsappNumber)) {
-        tempErrors.whatsappNumber = "Masukkan nomor WhatsApp yang valid (contoh: 085333049716)";
+        tempErrors.whatsappNumber = "Masukkan nomor WhatsApp yang valid (contoh: 08213142504)";
       }
     }
 
@@ -223,7 +223,7 @@ Terima kasih!`;
     setTimeout(() => {
       const textMessage = generateMessageText();
       const encodedText = encodeURIComponent(textMessage);
-      const waUrl = `https://wa.me/6285333049716?text=${encodedText}`;
+      const waUrl = `https://wa.me/628213142504?text=${encodedText}`;
       
       // Open in a new window/tab safely
       window.open(waUrl, "_blank", "noopener,noreferrer");
